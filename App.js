@@ -1,3 +1,11 @@
+// Import the crypto getRandomValues shim (**BEFORE** the shims)
+import "react-native-get-random-values"
+
+// Import the the ethers shims (**BEFORE** ethers)
+import "@ethersproject/shims"
+
+// Import the ethers library
+import { ethers, providers } from "ethers";
 import React, { Component } from 'react';
 import {
   Text,
@@ -28,10 +36,9 @@ var defaultNavigatorType = UNSET;
 export default class App extends Component {
   constructor() {
     super();
-
     this.state = {
       navigatorType : defaultNavigatorType,
-      sharedProps : sharedProps
+      sharedProps: sharedProps,
     }
     this._getExperienceSelector = this._getExperienceSelector.bind(this);
     this._getARNavigator = this._getARNavigator.bind(this);
@@ -46,7 +53,28 @@ export default class App extends Component {
       return this._getARNavigator();
     }
   }
-
+  _connectWallet() {
+    return window.ethereum
+      .enable()
+      .then(
+        () => Promise.resolve(new ethers.providers.Web3Provider(window.ethereum))
+      )
+      .then(provider => {
+        return provider.getNetwork().then(network => {
+          if (network.chainId !== 4)
+            throw new Error(`Unsupported network ID: ${chainId}`);
+        const signer = provider.getSigner();
+        this.setState({
+          provider: provider,
+          signer: signer,
+        });
+        }).catch(error => {
+          window.alert(JSON.stringify(error));
+          return this._connectWallet();
+      });
+      
+    });
+  }
   _getExperienceSelector() {
     return (
       <View style={localStyles.outer} >
@@ -60,7 +88,7 @@ export default class App extends Component {
             onPress={this._getExperienceButtonOnPress(AR_NAVIGATOR_TYPE)}
             underlayColor={'#68a0ff'} >
 
-            <Text style={localStyles.buttonText}>GO</Text>
+            <Text style={localStyles.buttonText}>Connect wallet</Text>
           </TouchableHighlight>
         </View>
       </View>
@@ -76,9 +104,11 @@ export default class App extends Component {
   
   _getExperienceButtonOnPress(navigatorType) {
     return () => {
-      this.setState({
-        navigatorType : navigatorType
-      })
+      this._connectWallet().then(() =>
+        this.setState({
+          navigatorType: navigatorType,
+        })
+      );
     }
   }
 
