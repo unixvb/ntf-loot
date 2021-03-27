@@ -10,6 +10,9 @@ import {
   ViroARSceneNavigator
 } from 'react-viro';
 
+
+var ARScene = require('./src/ar.screen');
+
 /*
  TODO: Insert your API key below
  */
@@ -20,8 +23,6 @@ var sharedProps = {
 var UNSET = "UNSET";
 var AR_NAVIGATOR_TYPE = "AR";
 
-// This determines which type of experience to launch in, or UNSET, if the user should
-// be presented with a choice of AR or VR. By default, we offer the user a choice.
 var defaultNavigatorType = UNSET;
 
 export default class App extends Component {
@@ -38,8 +39,6 @@ export default class App extends Component {
     this._exitViro = this._exitViro.bind(this);
   }
 
-  // Replace this function with the contents of _getVRNavigator() or _getARNavigator()
-  // if you are building a specific type of experience.
   render() {
     if (this.state.navigatorType == UNSET) {
       return this._getExperienceSelector();
@@ -48,7 +47,6 @@ export default class App extends Component {
     }
   }
 
-  // Presents the user with a choice of an AR or VR experience
   _getExperienceSelector() {
     return (
       <View style={localStyles.outer} >
@@ -69,16 +67,13 @@ export default class App extends Component {
     );
   }
 
-  // Returns the ViroARSceneNavigator which will start the AR experience
   _getARNavigator() {
     return (
       <ViroARSceneNavigator {...this.state.sharedProps}
-        initialScene={{scene: null}} />
+        initialScene={{scene: ARScene}} />
     );
   }
   
-  // This function returns an anonymous/lambda function to be used
-  // by the experience selector buttons
   _getExperienceButtonOnPress(navigatorType) {
     return () => {
       this.setState({
@@ -87,7 +82,6 @@ export default class App extends Component {
     }
   }
 
-  // This function "exits" Viro by setting the navigatorType to UNSET.
   _exitViro() {
     this.setState({
       navigatorType : UNSET
@@ -150,4 +144,4 @@ var localStyles = StyleSheet.create({
   }
 });
 
-module.exports = NFTLoot
+module.exports = App
