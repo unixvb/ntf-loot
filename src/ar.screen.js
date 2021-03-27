@@ -10,12 +10,20 @@ import {
   ViroSpotLight
 } from 'react-viro';
 
+const scaleSize = .005;
+
+const sharedProps = {
+  scale: [scaleSize, scaleSize, scaleSize],
+  position: [0, -0.5, -1],
+  type: "GLB"
+};
+
 export default class ArScreen extends Component {
   constructor() {
     super();
 
     this.state = {
-      text : "Initializing AR..."
+      text: "Initializing AR..."
     };
 
     this._onInitialized = this._onInitialized.bind(this);
@@ -23,17 +31,20 @@ export default class ArScreen extends Component {
 
   render() {
     return (
-      <ViroARScene onTrackingUpdated={this._onInitialized} >
+      <ViroARScene onTrackingUpdated={this._onInitialized}>
         <ViroAmbientLight color={"#aaaaaa"} />
-        <ViroSpotLight innerAngle={5} outerAngle={90} direction={[0,-1,-.2]}
-                       position={[0, 3, 1]} color="#ffffff" castsShadow={true} />
+        <ViroSpotLight innerAngle={5}
+                       outerAngle={90}
+                       direction={[0, -1, -.2]}
+                       position={[0, 3, 1]}
+                       color="#ffffff"
+                       intensity={100}
+                       castsShadow={true} />
 
         <Viro3DObject
-          source={require('./assets/low_poly_tree/Lowpoly_tree_sample.obj')}
-          resources={[]}
-          scale={[.01, .01, .01]}
-          position={[0, -0.2, -0.5]}
-          type="OBJ" />
+          source={{ uri: 'https://gateway.pinata.cloud/ipfs/QmXvxGf3WZvPJfXUAE4SNvwrPzAmwS2W6dP1EdGHBGV9ge/body.glb' }}
+          {...sharedProps}
+        />
       </ViroARScene>
     );
   }
@@ -41,7 +52,7 @@ export default class ArScreen extends Component {
   _onInitialized(state, reason) {
     if (state == ViroConstants.TRACKING_NORMAL) {
       this.setState({
-        text : "Hello World!"
+        text: "Hello World!"
       });
     } else if (state == ViroConstants.TRACKING_NONE) {
       // Handle loss of tracking
