@@ -1,5 +1,5 @@
 import { AppRegistry } from 'react-native';
-import App from './src/app.tsx';
+import { App } from './src/app.tsx';
 
 AppRegistry.registerComponent('NFTLoot', () => App);
 
