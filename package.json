@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "postinstall": "rn-nodeify --install --hack --yarn",
-    "prestart:off": "./node_modules/react-viro/bin/run_ngrok.sh",
+    "prestart": "./node_modules/react-viro/bin/run_ngrok.sh",
     "start": "react-native start",
     "test": "jest"
   },
