@@ -28,9 +28,9 @@ import './Strings.sol';
     string private _contract_uri;
     string private _tokmeta_base_uri;
      
-    constructor() public ERC1155PresetMinterPauser("ipfs://QmZw8c8rmSe1tLfS1d9gv1k2TR3bgpQrHrn21Dw3fPwHVQ/") {
+    constructor() public ERC1155PresetMinterPauser("ipfs://Qmb28LsvDN3u3A9w3aDgiVRpVjoV65N8Vo2oRsbqjMfbEC/") {
         _contract_uri = "ipfs://QmSaofN5x4smZUgo3MrAwfcFiM25ipTkkmaBQTvntuAvwt";
-        _tokmeta_base_uri = "ipfs://QmZw8c8rmSe1tLfS1d9gv1k2TR3bgpQrHrn21Dw3fPwHVQ/";
+        _tokmeta_base_uri = "ipfs://Qmb28LsvDN3u3A9w3aDgiVRpVjoV65N8Vo2oRsbqjMfbEC/";
         _mint(msg.sender, BODY_WHITE, 1000, "");
         _mint(msg.sender, BODY_BLACK, 100, "");
         _mint(msg.sender, BODY_PINK, 10, "");
