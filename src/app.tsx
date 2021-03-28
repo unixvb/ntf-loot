@@ -6,6 +6,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { QrCodeModal } from './qr-code-modal/qr-code-modal';
 import { Navigator } from './navigator/navigator';
 
+console.disableYellowBox = true;
+
 export const App = () => {
   return (
     <WalletConnectProvider
