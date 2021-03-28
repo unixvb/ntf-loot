@@ -1,6 +1,7 @@
 import React from 'react';
-import WalletConnectProvider from '@walletconnect/react-native-dapp';
 import { Platform } from 'react-native';
+import WalletConnectProvider from '@walletconnect/react-native-dapp';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Navigator } from './navigator';
 import { QrCodeModal } from './qr-code-modal/qr-code-modal';
@@ -10,7 +11,7 @@ export const App = () => {
     <WalletConnectProvider
       redirectUrl={Platform.OS === 'web' ? window.location.origin : 'yourappscheme://'}
       storageOptions={{
-        asyncStorage: undefined
+        asyncStorage: AsyncStorage
       }}
       renderQrcodeModal={QrCodeModal}>
       <>

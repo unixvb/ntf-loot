@@ -32,13 +32,13 @@ const { width, height } = Dimensions.get('window');
 
 export const QrCodeModal =
   ({
+    visible,
     walletServices,
     connectToWalletService,
     uri,
     onDismiss,
     division = 1,
   }: RenderQrcodeModalProps & { readonly division: number }): JSX.Element => {
-    const visible = true;
     const shouldConnectToWalletService = React.useCallback(
       (walletService: WalletService) => connectToWalletService(walletService, uri),
       [connectToWalletService, uri],
