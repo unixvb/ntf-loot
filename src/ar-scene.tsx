@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   ViroARScene,
@@ -7,6 +7,7 @@ import {
   ViroAmbientLight,
   ViroSpotLight
 } from 'react-viro';
+import { useWalletConnect } from '@walletconnect/react-native-dapp';
 
 const uriArrayMock = ['https://gateway.pinata.cloud/ipfs/QmXvxGf3WZvPJfXUAE4SNvwrPzAmwS2W6dP1EdGHBGV9ge/body.glb'];
 
@@ -19,6 +20,8 @@ const sharedProps = {
 };
 
 export const ArScene = () => {
+  const connector = useWalletConnect();
+
   const [isInitialized, setIsInitialized] = useState(false);
   const [uriArray] = useState(uriArrayMock);
 
@@ -41,7 +44,13 @@ export const ArScene = () => {
                      intensity={100}
                      castsShadow={true} />
 
-      {uriArray.map((uri, index) => <Viro3DObject key={uri + index} source={{ uri }} {...sharedProps} />)}
+      {uriArray.map((uri, index) =>
+        <Viro3DObject
+          key={uri + index}
+          source={{ uri }}
+          {...sharedProps}
+        />
+      )}
     </ViroARScene>
   );
 }

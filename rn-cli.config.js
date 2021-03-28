@@ -25,6 +25,14 @@ module.exports = {
     return ["obj", "mtl", "JPG", "vrx", "hdr", "gltf", "glb", "bin", "arobject"];
   },
 
+  getTransformModulePath() {
+    return require.resolve("react-native-svg-transformer");
+  },
+
+  getSourceExts() {
+    return ["js", "jsx", "svgx"];
+  },
+
   _getRoots() {
     // match on either path separator
     if (__dirname.match(/node_modules[\/\\]react-native[\/\\]packager$/)) {

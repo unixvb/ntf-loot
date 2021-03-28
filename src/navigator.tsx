@@ -1,58 +1,53 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { ViroARSceneNavigator } from 'react-viro';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useWalletConnect } from '@walletconnect/react-native-dapp';
-import {
-  Text,
-  View,
-  TouchableHighlight,
-  Button,
-} from 'react-native';
-import {
-  ViroARSceneNavigator
-} from 'react-viro';
 
 import { ArScene } from './ar-scene';
-import { NavigatorStyles } from './navigator.styles';
+import CloseIcon from './icons/close.svg';
+import { step } from './config';
 
-// TODO: Insert API key below
-const sharedProps = {
-  apiKey: "API_KEY_HERE",
-}
-
-enum NAVIGATION_SCREEN {
-  ROOT = "ROOT",
-  AR = "AR"
-}
+const iconSize = 4 * step;
 
 export const Navigator = () => {
   const connector = useWalletConnect();
-  const [navigatorType, setNavigatorType] = useState(NAVIGATION_SCREEN.ROOT);
 
-  const handleArButtonPress = () => {
-    setNavigatorType(NAVIGATION_SCREEN.AR);
-  }
+  return <>
+    <ViroARSceneNavigator initialScene={{ scene: ArScene }} />
 
-  switch (navigatorType) {
-    case NAVIGATION_SCREEN.ROOT:
-      return (
-        <View style={NavigatorStyles.outer}>
-          <View style={NavigatorStyles.inner}>
+    {connector.connected &&
+    <TouchableOpacity
+      style={{
+        position: 'absolute',
+        top: 7 * step,
+        right: 2 * step,
+        width: iconSize,
+        height: iconSize,
+      }}
+      onPress={() => connector.killSession()}
+    >
+      <CloseIcon width={iconSize} height={iconSize} />
+    </TouchableOpacity>
+    }
 
-            <Text style={NavigatorStyles.titleText}>
-              View your character:
-            </Text>
-
-            <TouchableHighlight style={NavigatorStyles.buttons}
-                                onPress={handleArButtonPress}
-                                underlayColor={'#68a0ff'}>
-
-              <Text style={NavigatorStyles.buttonText}>Connect wallet</Text>
-
-            </TouchableHighlight>
-            {!connector.connected && <Button title="Connect" onPress={() => connector.connect()} />}
-          </View>
-        </View>
-      );
-    case NAVIGATION_SCREEN.AR:
-      return <ViroARSceneNavigator {...sharedProps} initialScene={{ scene: ArScene }} />;
-  }
+    {!connector.connected &&
+    <View style={{
+      ...StyleSheet.absoluteFillObject,
+      justifyContent: 'center',
+      alignItems: 'center'
+    }}>
+      <TouchableOpacity
+        style={{
+          backgroundColor: '#008CBA',
+          borderRadius: 0.5 * step,
+          paddingVertical: 2 * step,
+          paddingHorizontal: 4 * step
+        }}
+        onPress={() => connector.connect()}
+      >
+        <Text style={{ color: 'white', fontSize: 24, textAlign: 'center' }}>Connect the Wallet</Text>
+      </TouchableOpacity>
+    </View>
+    }
+  </>;
 }
