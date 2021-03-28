@@ -3,7 +3,7 @@ import { ViroARSceneNavigator } from 'react-viro';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { useWalletConnect } from '@walletconnect/react-native-dapp';
 
-import CloseIcon from '../icons/close.svg';
+import CloseIcon from '../assets/close.svg';
 import { closeIconSize, NavigatorStyles } from './navigator.styles';
 import { ArScene } from '../ar-scene';
 

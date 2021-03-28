@@ -1,14 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-import {
-  ViroARScene,
-  ViroConstants,
-  Viro3DObject,
-  ViroAmbientLight,
-  ViroSpotLight
-} from 'react-viro';
+import { Viro3DObject, ViroAmbientLight, ViroARScene, ViroConstants, ViroSpotLight } from 'react-viro';
 import { useWalletConnect } from '@walletconnect/react-native-dapp';
 
+const baseBody = require('./assets/body-green.glb');
 const uriArrayMock = ['https://gateway.pinata.cloud/ipfs/QmXvxGf3WZvPJfXUAE4SNvwrPzAmwS2W6dP1EdGHBGV9ge/body.glb'];
 
 const scaleSize = .005;
@@ -43,14 +38,10 @@ export const ArScene = () => {
                      color="#ffffff"
                      intensity={100}
                      castsShadow={true} />
-
-      {uriArray.map((uri, index) =>
-        <Viro3DObject
-          key={uri + index}
-          source={{ uri }}
-          {...sharedProps}
-        />
-      )}
+      {connector.connected
+        ? uriArray.map((uri, index) => <Viro3DObject key={uri + index} source={{ uri }}{...sharedProps} />)
+        : <Viro3DObject source={baseBody} {...sharedProps} />
+      }
     </ViroARScene>
   );
 }
