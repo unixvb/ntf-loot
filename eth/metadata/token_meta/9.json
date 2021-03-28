@@ -1,0 +1,17 @@
+{
+  "name": "Round eyes",
+  "description": "Eyes for 3D guy with round look.",
+  "image": null,
+  "external_url": null,
+  "animation_url": "ipfs://QmQWivThrxurH8XgQwnCxsxgCXacDJ5Tf8Wb79Krc3zRwA/eye/eye-round.glb",
+  "attributes": [
+    {
+      "trait_type": "Mood",
+      "value": "Round"
+    },
+    {
+      "trait_type": "Type",
+      "value": "Eyes"
+    }
+  ]
+}

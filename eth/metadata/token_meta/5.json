@@ -1,0 +1,17 @@
+{
+  "name": "Red hat",
+  "description": "Hat for 3D guy with red skintone.",
+  "image": null,
+  "external_url": null,
+  "animation_url": "ipfs://QmQWivThrxurH8XgQwnCxsxgCXacDJ5Tf8Wb79Krc3zRwA/hat/hat-red.glb",
+  "attributes": [
+    {
+      "trait_type": "Color",
+      "value": "Red"
+    },
+    {
+      "trait_type": "Type",
+      "value": "Hat"
+    }
+  ]
+}

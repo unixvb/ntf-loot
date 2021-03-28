@@ -1,0 +1,17 @@
+{
+  "name": "Sad mouth",
+  "description": "Mouth for 3D guy body with sad mood.",
+  "image": null,
+  "external_url": null,
+  "animation_url": "ipfs://QmQWivThrxurH8XgQwnCxsxgCXacDJ5Tf8Wb79Krc3zRwA/mouth/mouth-sad.glb",
+  "attributes": [
+    {
+      "trait_type": "Mood",
+      "value": "Sad"
+    },
+    {
+      "trait_type": "Type",
+      "value": "Eyebrow"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "name": "3D guy",
+  "description": "Test 3D guy from Blockhain hackathon.",
+  "image": "ipfs://QmRkob3NbNqHHNajLp68swPrDrBg8LUWrTPr2gkAq7DcZk",
+  "external_link": null,
+  "seller_fee_basis_points": 200,
+  "fee_recipient": "0xa76686069B6a007a0C74a9B098b31c358f22bC2A"
+}
