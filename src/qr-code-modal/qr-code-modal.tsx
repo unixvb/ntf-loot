@@ -124,6 +124,7 @@ export const QrCodeModal =
             width,
             height,
             opacity,
+            zIndex: 1000
           },
         ]}
         pointerEvents={visible ? 'box-none' : 'none'}>
