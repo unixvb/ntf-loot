@@ -1,0 +1,31 @@
+export enum Loots {
+  BODY_WHITE = 0,
+  BODY_BLACK = 1,
+  BODY_PINK = 2,
+  HAT_WHITE = 3,
+  HAT_BLUE = 4,
+  HAT_RED = 5,
+  HAT_GREEN = 6,
+  HAT_BLACK = 7,
+  EYE_NARROW = 8,
+  EYE_ROUND = 9,
+  EYEBROW_EVIL = 10,
+  MOUTH_SAD = 11,
+  MOUTH_SMILE = 12,
+}
+
+export const lootsArray: Loots[] = [
+  Loots.BODY_WHITE,
+  Loots.BODY_BLACK,
+  Loots.BODY_PINK,
+  Loots.HAT_WHITE,
+  Loots.HAT_BLUE,
+  Loots.HAT_RED,
+  Loots.HAT_GREEN,
+  Loots.HAT_BLACK,
+  Loots.EYE_NARROW,
+  Loots.EYE_ROUND,
+  Loots.EYEBROW_EVIL,
+  Loots.MOUTH_SAD,
+  Loots.MOUTH_SMILE,
+]
