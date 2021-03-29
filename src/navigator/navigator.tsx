@@ -4,15 +4,25 @@ import { Alert, Text, TouchableOpacity, View } from 'react-native';
 import { useWalletConnect } from '@walletconnect/react-native-dapp';
 
 import CloseIcon from '../assets/close.svg';
+import LeftArrowIcon from '../assets/left-arrow.svg';
+import RightArrowIcon from '../assets/right-arrow.svg';
 
-import { closeIconSize, NavigatorStyles } from './navigator.styles';
+import { iconSize, NavigatorStyles } from './navigator.styles';
 import { lootsArray } from '../types/loots.enum';
 import { LootContract } from '../util/contract.util';
 import { ArScene } from '../ar-scene';
+import { step } from '../config';
+import { ActiveModelState } from './state-provider';
+
+const maxHatIndex = 4;
+const maxMouth = 2;
 
 export const Navigator = () => {
   const connector = useWalletConnect();
   const [balances, setBalances] = useState<(number | string) []>([]);
+
+  const [hatIndex, setHatIndex] = useState(0);
+  const [mouthIndex, setMouthIndex] = useState(0);
 
   useEffect(() => {
     if (connector.connected) {
@@ -57,16 +67,54 @@ export const Navigator = () => {
     ]
   );
 
-  return <>
+  const hatLeftButtonPress = () => setHatIndex(index => Math.max(index - 1, 0));
+  const hatRightButtonPress = () => setHatIndex(index => Math.min(index + 1, maxHatIndex));
+
+  const mouthLeftButtonPress = () => setMouthIndex(index => Math.max(index - 1, 0));
+  const mouthRightButtonPress = () => setMouthIndex(index => Math.min(index + 1, maxMouth));
+
+  return <ActiveModelState.Provider value={{ hatIndex, mouthIndex }}>
+
     <ViroARSceneNavigator initialScene={{ scene: ArScene }} />
 
     {connector.connected &&
-    <TouchableOpacity
-      style={NavigatorStyles.closeIcon}
-      onPress={handleCloseButtonPress}
-    >
-      <CloseIcon width={closeIconSize} height={closeIconSize} />
-    </TouchableOpacity>
+    <>
+      <TouchableOpacity
+        style={NavigatorStyles.closeIcon}
+        onPress={handleCloseButtonPress}
+      >
+        <CloseIcon width={iconSize} height={iconSize} />
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={NavigatorStyles.leftIcon}
+        onPress={hatLeftButtonPress}
+      >
+        <LeftArrowIcon width={iconSize} height={iconSize} />
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={NavigatorStyles.rightIcon}
+        onPress={hatRightButtonPress}
+      >
+        <RightArrowIcon width={iconSize} height={iconSize} />
+      </TouchableOpacity>
+
+
+      <TouchableOpacity
+        style={[NavigatorStyles.leftIcon, { top: 20 * step }]}
+        onPress={mouthLeftButtonPress}
+      >
+        <LeftArrowIcon width={iconSize} height={iconSize} />
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={[NavigatorStyles.rightIcon, { top: 20 * step }]}
+        onPress={mouthRightButtonPress}
+      >
+        <RightArrowIcon width={iconSize} height={iconSize} />
+      </TouchableOpacity>
+    </>
     }
 
     {!connector.connected &&
@@ -79,5 +127,5 @@ export const Navigator = () => {
       </TouchableOpacity>
     </View>
     }
-  </>;
+  </ActiveModelState.Provider>;
 }

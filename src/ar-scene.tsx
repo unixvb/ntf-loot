@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Viro3DObject, ViroAmbientLight, ViroARScene, ViroConstants, ViroSpotLight } from 'react-viro';
 import { useWalletConnect } from '@walletconnect/react-native-dapp';
 
 import { replaceIpfsSuffix } from './util/ipfs.util';
 import { LootContract } from './util/contract.util';
 import { Loots } from './types/loots.enum';
+import { ActiveModelState } from './navigator/state-provider';
 
 const baseBody = require('./assets/body-green.glb');
 
@@ -19,10 +20,14 @@ const sharedProps = {
 export const ArScene = () => {
   const connector = useWalletConnect();
 
+  const { hatIndex, mouthIndex } = useContext(ActiveModelState);
+
   const [isInitialized, setIsInitialized] = useState(false);
   const [uriArray, setUriArray] = useState<string[]>([]);
+  const [uriMouthArray, setMouthUriArray] = useState<string[]>([]);
+  const [pinkBody, setPinkBody] = useState<string>();
 
-  const get3dModel = async (tokenId: Loots) => {
+  const get3dModel = async (tokenId: Loots, callback: (animationUrl: string) => void) => {
     await LootContract.methods.uri(tokenId).call()
       .then((uri: string) => {
         //get 3d model URI from meta JSON from 'animation_url'.
@@ -37,12 +42,23 @@ export const ArScene = () => {
         });
       })
       .then((res: Response) => res.json())
-      .then(json => setUriArray([replaceIpfsSuffix(json.animation_url)]))
+      .then(json => callback(replaceIpfsSuffix(json.animation_url)))
       .catch(() => {
       })
   }
 
-  useEffect(() => void connector.connected && get3dModel(Loots.HAT_RED), [connector.connected])
+  useEffect(() => {
+    get3dModel(Loots.HAT_RED, (animationUrl => setUriArray(arr => [...arr, animationUrl])));
+    get3dModel(Loots.HAT_WHITE, (animationUrl => setUriArray(arr => [...arr, animationUrl])));
+    get3dModel(Loots.HAT_BLACK, (animationUrl => setUriArray(arr => [...arr, animationUrl])));
+    get3dModel(Loots.HAT_BLUE, (animationUrl => setUriArray(arr => [...arr, animationUrl])));
+    get3dModel(Loots.HAT_GREEN, (animationUrl => setUriArray(arr => [...arr, animationUrl])));
+
+    get3dModel(Loots.MOUTH_SAD, (animationUrl => setMouthUriArray(arr => [...arr, animationUrl])));
+    get3dModel(Loots.MOUTH_SMILE, (animationUrl => setMouthUriArray(arr => [...arr, animationUrl])));
+
+    get3dModel(Loots.BODY_PINK, (animationUrl => setPinkBody(animationUrl)));
+  }, []);
 
   const handleTrackingUpdated = (state: ViroConstants) => {
     if (state == ViroConstants.TRACKING_NORMAL) {
@@ -62,9 +78,15 @@ export const ArScene = () => {
                      color="#ffffff"
                      intensity={100}
                      castsShadow={true} />
-      <Viro3DObject source={baseBody} {...sharedProps} />
+      {connector.connected ? (<>
+          <Viro3DObject source={{ uri: pinkBody }} {...sharedProps} />
+          {uriArray.map((uri, index) => index === hatIndex &&
+            <Viro3DObject key={uri + index} source={{ uri }}{...sharedProps} />)}
+          {uriMouthArray.map((uri, index) => index === mouthIndex &&
+            <Viro3DObject key={uri + index} source={{ uri }}{...sharedProps} />)}
+        </>) :
 
-      {uriArray.map((uri, index) => <Viro3DObject key={uri + index} source={{ uri }}{...sharedProps} />)}
+        <Viro3DObject source={baseBody} {...sharedProps} />}
     </ViroARScene>
   );
 }
