@@ -1,7 +1,3 @@
 ### Example video
 
-<figure class="video_container">
-  <video controls="true" allowfullscreen="true" poster="docs/poster_image.png">
-    <source src="docs/example.mp4" type="video/mp4">
-  </video>
-</figure>
+https://user-images.githubusercontent.com/10281464/112823318-cbdf5180-9091-11eb-9e93-0c9ec17ea02e.mp4
