@@ -1,15 +1,29 @@
 import { StyleSheet } from 'react-native';
 import { step } from '../config';
 
-export const closeIconSize = 4 * step;
+export const iconSize = 4 * step;
+
+const sharedIconStyles = {
+  position: 'absolute',
+  width: iconSize,
+  height: iconSize,
+}
 
 export const NavigatorStyles = StyleSheet.create({
   closeIcon: {
-    position: 'absolute',
+    ...sharedIconStyles,
     top: 7 * step,
     right: 2 * step,
-    width: closeIconSize,
-    height: closeIconSize,
+  },
+  leftIcon: {
+    ...sharedIconStyles,
+    top: 14 * step,
+    left: 2 * step,
+  },
+  rightIcon: {
+    ...sharedIconStyles,
+    top: 14 * step,
+    right: 2 * step,
   },
   connectContainer: {
     ...StyleSheet.absoluteFillObject,
