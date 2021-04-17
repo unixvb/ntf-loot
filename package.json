@@ -6,7 +6,9 @@
     "postinstall": "rn-nodeify --install --hack --yarn",
     "prestart": "./node_modules/react-viro/bin/run_ngrok.sh",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "ts": "tsc --pretty",
+    "ios:pods": "cd ios && pod install"
   },
   "dependencies": {
     "@ethersproject/shims": "^5.0.11",
