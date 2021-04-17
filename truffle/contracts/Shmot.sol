@@ -2,7 +2,7 @@
 
 pragma solidity >=0.8.0 <0.9.0;
 
-import 'https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC1155/presets/ERC1155PresetMinterPauser.sol';
+import '../../node_modules/@openzeppelin/contracts/token/ERC1155/presets/ERC1155PresetMinterPauser.sol';
 import './Strings.sol';
 /**
  * @title MyNFT
@@ -10,8 +10,7 @@ import './Strings.sol';
  */
  
  contract Shmotki is ERC1155PresetMinterPauser {
-     
-    
+
     uint256 public constant BODY_WHITE = 0;
     uint256 public constant BODY_BLACK = 1;
     uint256 public constant BODY_PINK = 2; 
