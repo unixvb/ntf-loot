@@ -1,9 +1,11 @@
 ### Spec
  - IOS & Android support
  - Auhmented Reality
+ - contracts deployed to the BSC & ETH Testnets
  - supports 30 crypto wallets
  - 3D model loaded from IPFS
- - shows character clothes based on account NFTs
+ - shows NFTS for connected wallets
+ - (WIP) shows character clothes based on account NFT balance 
 
 ### Demo video
 
